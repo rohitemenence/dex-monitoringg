@@ -24,9 +24,7 @@ router.get("/", async (req, res) => {
       await TokenSpecs(item).save()
 
     ))
-    // let tokennsArray = Object.keys(tokens);
-    // console.log(tokennsArray)
-    // await tokennsArray.create({tokennsArraySchema : tokennsArraySchema })
+
     res.status(200).json({
         data: tokens,
         message: "Hello from demo api",
@@ -49,14 +47,7 @@ router.post("/", async (req, res) => {
     const dex = [];
     for (let i = 0; i < 10; i++) {  
       const pairAddress = await dexFactoryContractInstance.allPairs(i);
-      // let response = await tokenService.getDataFromPairContract(
-      //   pairAddress,
-      //   pairContractAbi,
-      //   provider
-      // );
-      // if (response !== null) {
-      //   test.push(response);
-      // }
+      
       dex.push(await DexMonitor(pairAddress, pairContractAbi, provider));
 
     }
@@ -72,26 +63,5 @@ router.post("/", async (req, res) => {
   }
 });
 
-// router.get("/", async (req, res) => {
-//   try {
-//     let demos = await tokenService.getDemos();
-
-//     console.log(demos, "demosss");
-
-//     // await TokenSpecs.create({demos : demos })
-
-    
-//     res.status(200).json({
-//       data: demos,
-//       message: "Hello from demo api",
-//       success: true,
-//     });
-//   } catch (error) {
-//     res.status(500).json({
-//       message: error.message,
-//       success: true,
-//     });
-//   }
-// });
 
 module.exports = router;

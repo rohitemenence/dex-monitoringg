@@ -47,12 +47,12 @@ async function DexMonitor(pairAddress, pairContractAbi, provider,) {
                 }
 
                 const currentBlock = await provider.getBlockNumber();
-                const syncEvents = await pairContract.queryFilter(pairContract.filters.Sync(), currentBlock - 1, 'latest');
+                const syncEvents = await pairContract.queryFilter(pairContract.filters.Sync(), currentBlock - 10, 'latest');
 
                 // usdc transfer from pair 
-                const usdcTransferFromPair = await usdcContract.queryFilter(usdcContract.filters.Transfer(pairAddress, null), currentBlock - 10, 'latest');
+                const usdcTransferFromPair = await usdcContract.queryFilter(usdcContract.filters.Transfer(pairAddress, null), currentBlock - 100, 'latest');
                 // usdc transfer to pair
-                const usdcTransferToPair = await usdcContract.queryFilter(usdcContract.filters.Transfer(null, pairAddress), currentBlock - 10, 'latest');
+                const usdcTransferToPair = await usdcContract.queryFilter(usdcContract.filters.Transfer(null, pairAddress), currentBlock - 100, 'latest');
 
                 async function processEvents(syncEvent) {
                     const obj = new Object();
@@ -87,7 +87,6 @@ async function DexMonitor(pairAddress, pairContractAbi, provider,) {
                     obj.blockNumber = syncEvent.blockNumber;
                     obj.time = syncTimestamp;
 
-                    // console.log(obj, "objecttttt")
                     return obj;
                 }
             
@@ -130,10 +129,10 @@ async function DexMonitor(pairAddress, pairContractAbi, provider,) {
                     volumes.push(obj);
                 }
                 tokenMarketData.volumes = volumes;
-                // const {_id} = await TokenSpecs.findOne({ address: tokenMarketData.token})
 
-                // console.log({_id}, "iddd")
-                // tokenMarketData.token = _id
+                const {_id} = await TokenSpecs.findOne({ address: tokenMarketData.token.toLowerCase()}, {id: 1})
+
+                tokenMarketData.token = _id
 
                 await TokenMarketStats(tokenMarketData).save();
                 console.log('tokenMarketData', tokenMarketData)
@@ -146,13 +145,6 @@ async function DexMonitor(pairAddress, pairContractAbi, provider,) {
     }
 
 }
-
-// token
-// totalSupply
-// circulatingSupply
-// price
-// volume
-// timestamp
 
 module.exports = {
     DexMonitor

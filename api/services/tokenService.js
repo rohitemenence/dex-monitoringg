@@ -22,16 +22,6 @@ const getDataFromPairContract = async (pairAddress, pairContractAbi, provider) =
             const response = await axios.get(`https://api.1inch.io/v5.0/1/tokens`);
             const {tokens} = response.data;
 
-
-            // tokens.platform = "ETHEREUM"
-
-            // console.log(tokens, "tokenData")
-
-            // console.log('token0', token0);       
-            // console.log('token1', token1);
-
-            
-
             if(token0.toLowerCase() !== "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48") {
                 const tokenspecs = tokens[token0.toLowerCase()]
                 console.log(tokenspecs, "tokenspecs")

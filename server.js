@@ -25,10 +25,6 @@ const demoRoutes = require('./api/routes/demo');
 app.use(cors());
 app.use(express.json());
 Routes(app)
-// app.use('/demo' , require("./api/routes/token"));
-// app.use('/', require("./api/routes/token") )
-// app.use('/token' , require("./api/routes/token"));
-
 
 app.use('/', (req, res, next) => {
     res.status(304).send('Application Server is running');
