@@ -46,8 +46,8 @@ router.post("/", async (req, res) => {
       uniswapV2FactoryAbi,
       provider 
     );
-    const test = [];
-    for (let i = 0; i < 1; i++) {  
+    const dex = [];
+    for (let i = 0; i < 10; i++) {  
       const pairAddress = await dexFactoryContractInstance.allPairs(i);
       // let response = await tokenService.getDataFromPairContract(
       //   pairAddress,
@@ -57,11 +57,11 @@ router.post("/", async (req, res) => {
       // if (response !== null) {
       //   test.push(response);
       // }
-      test.push(await DexMonitor(pairAddress, pairContractAbi, provider));
+      dex.push(await DexMonitor(pairAddress, pairContractAbi, provider));
 
     }
     res.status(200).json({
-      data: Promise.all(test),
+      data: Promise.all(dex),
       message: "Hello from demo api",
     });
   } catch (error) {

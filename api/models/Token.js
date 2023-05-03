@@ -11,4 +11,3 @@ const TokenSpecsSchema = mongoose.Schema({
 });
 // inbox: { type: mongoose.Schema.Types.ObjectId, ref: 'Inbox', required: true },
 module.exports = mongoose.model('TokenSpecs', TokenSpecsSchema);
- 
